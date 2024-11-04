@@ -89,4 +89,83 @@ With respect to OUR data:
 Target Variable/Label = repeat_customer  
 Columns to exclude: customer_id, product_line, product_id, invoice_id
 
+## Indexer
+
+We evaluate our categorical data and use StringIndexer() to convert the categorical string values into numerical indices
+We convert customer_type from a string to numerical index with non-member as 1 and member as 0  
+A new column customer_type_index is created and added to the dataframe
+Indexer.fit fits the indexer to the combined_table, which computes the indices for the distinct values in the customer_type column  
+We utilize TRANSFORM after fitting to add a new column, customer_type_index which contains the new numeric index.  
+
+![image](https://github.com/user-attachments/assets/37357278-845d-42de-9ae2-91ca5148010b)
+
+## Feature Correlation Matrix
+
+
+We generate a correlation matrix with our 3 numeric features including customer_type_index  
+
+
+![image](https://github.com/user-attachments/assets/9d0a0fcc-0d19-4950-a002-d7366944a1b1)
+
+
+![image](https://github.com/user-attachments/assets/0d4ea58b-5166-4200-aa98-b9f361ef2c46)
+
+
+Correlation Coefficient Interpretations:  
+- 1 indicates that as one increases so does the other
+- -1 indicates that as one increases, the other decreases 
+- 0 indicates no correlation
+  
+Feature Correlation Matrices may be insightful as to which features are going to be more influential in predicting our target variable  
+
+## Correlation Matrix WITH Target Variable
+
+The same process was repeated however this time we include the target variable repeat_customer to see the relationships between our features  
+
+![image](https://github.com/user-attachments/assets/aca3784d-7009-44ac-9569-36c912da8402)  
+
+We see customer_type_index has a slightly negative correlation coefficient and it was determined that it would be a good idea to include it as it may just be capturing different insights than days_until_shipped and total and also might balance their high correlation coefficient out a little and generally have a more robust dataset to work with  
+
+
+## OneHotCodeEstimator & VectorAssembler
+
+We utilize ONEHOTENCODERESTIMATOR() and we create a new column customer_type_encoded that consists of a one hot encoded vector of values.  
+This is necessary as we need to put our index in a format that our machine learning algorithm can read.  
+Encoder.fit fits the encoder to combined_table_indexed dataframe, determining the on-hot encoding based on the distinct values in customer_type_encoded  
+We utilize TRANSFORM to add a new column with our data in customer_type_encoded. Thus we are transforming customer_type_index into a binary vector format  
+
+
+Vector Assembler:  
+Next, we transform our numerical input features into a vector of features that we will just call “features”. We must do this transformation bc MLlib algorithms operate on a single vector of input features as opposed to a list.  
+VectorAssmbler() is a feature transformer in Spark MLlib that combines multiple columns into a single vector column.  
+Why single vector? MLlib algorithms expect input in the form of a single vector for each data point rather than separate columns or lists bc the algorithms are designed to take in data as a whole, which makes computations more efficient. Additionally, many machine learning algorithms INCLUDING logistic regression use linear algebra operations which work naturally with vectors.
+
+
+![image](https://github.com/user-attachments/assets/28d17d9a-8a6c-4f91-a5ac-5f880cfda6c1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
