@@ -26,3 +26,15 @@ The project successfully generated predictions for first-time customers, enablin
 
 
 ## Outlined Steps w/ Code:
+
+
+Create a SparkSession and read in our data as Spark Dataframes
+Inspect first 5 rows of each CSV
+Count rows of each clean dataframe vs. unclean
+Drop null values
+Inspect schema of each dataframe
+
+![image](https://github.com/user-attachments/assets/4b78c54e-e765-4822-85cb-0b9242359504)
+
+![image](https://github.com/user-attachments/assets/8a0251ca-bcd9-4b26-a3c0-73e32aa875c1)
+
