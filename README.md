@@ -229,13 +229,40 @@ Inversely, if the weight is negative, it implies that as that feature value decr
 	-  Could imply that non-members have a lower retention rate
 
 
+## Create and Preprocess Recent Customer Data/Make PRedictions
+
+- This model was run on the recent_combined_table dataframe and similar predictions were generated  
+- The distribution of repeat vs non-repeat was compared and displayed a disparity between the two datasets  
+- Implication that current model may not be as effective and changes can be made
+
+![image](https://github.com/user-attachments/assets/1d1a6b84-b336-430d-b487-c810ca187593)
 
 
+![image](https://github.com/user-attachments/assets/13473563-facd-4aa8-8374-a8a5a9c3e68e)
+
+We see here that there is a much greater number of non repeat customer vs repeat in our historical dataset meanwhile when we ran our model on the recent_customers table, it was nearly a 50/50 likelihood of being a repeat customer.  
+ 
+This suggested to me that our model isn’t as reliable as I originally thought so in the future, it might be good to add or modify features to better capture some nuances of repeat purchasing behavior or RESAMPLING techniques like SMOTE which generates synthetic examples of the minority class to create a more balanced dataset.
 
 
+## Considerations/Methods to Improve
+
+- Data Quality
+- Feature Engineering
+- Feature Selection
+- Class balance
+
+-  Add/modify features to better capture some nuances in the data
+-  Resampling techniques(SMOTE)
+-  Conducted some additional testing, converting product_line and extracting store_location from invoice_id to create two new numerical indices
+-  Two additional features could potentially improve the model
 
 
+Here we have added product_line and store_location as numerical indices to view their correlations  
+Adding new features can allow us to use a more robust dataset for a more effective ML model
 
+
+![image](https://github.com/user-attachments/assets/a383401f-2666-4ff4-82cd-60c8a6aa1688)
 
 
 
