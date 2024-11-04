@@ -24,3 +24,5 @@ Applied the trained model to predict repeat purchase behavior for customers in t
 Outcome
 The project successfully generated predictions for first-time customers, enabling Distributed Discounts to identify potential repeat buyers and enhance their marketing strategies.
 
+
+## Outlined Steps w/ Code:
