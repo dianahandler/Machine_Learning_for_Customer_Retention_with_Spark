@@ -67,3 +67,10 @@ This process is repeated with the recent_customers and recent_invoices dataframe
 
 
 ![image](https://github.com/user-attachments/assets/720c32c7-2b22-4e9d-b417-288b9a3e4543)
+
+# Create Preprocessing Pipeline to Handle Non-Numeric Features  
+- Create StringIndexer
+- Encoder
+- Numerical Assembler
+- Scaler
+- Assembler
