@@ -39,7 +39,7 @@ Inspect schema of each dataframe
 ![image](https://github.com/user-attachments/assets/8a0251ca-bcd9-4b26-a3c0-73e32aa875c1)
 
 
-# Updating Schemas/Changing Data Types
+## Updating Schemas/Changing Data Types
 
 We inspect the schemas of each table and determine which columns to update datatypes(from string to integer)
 
@@ -53,7 +53,7 @@ This was done for all four datasets
 ![image](https://github.com/user-attachments/assets/43d80326-a614-4d1a-8006-2d3e95df314d)
 
 
-# Utilize Spark SQL for Queries/Joins
+## Utilize Spark SQL for Queries/Joins
 
 We create a temporary view using createOrReplaceTempView() from our dataframe that will act as a table that we can query for customers w/ SQL-like interface
 We repeat this process with the invoices_data and perform an inner join on the customer_id column
@@ -68,7 +68,7 @@ This process is repeated with the recent_customers and recent_invoices dataframe
 
 ![image](https://github.com/user-attachments/assets/720c32c7-2b22-4e9d-b417-288b9a3e4543)
 
-# Create Preprocessing Pipeline to Handle Non-Numeric Features  
+## Create Preprocessing Pipeline to Handle Non-Numeric Features  
 - Create StringIndexer
 - Encoder
 - Numerical Assembler
@@ -84,6 +84,9 @@ How it works in MLlib:
 - Training: the model learns from your ‘labeled’ data(where the target variable is KNOWN to adjust its parameters.
 - Prediction: Once traines, you can use the model to predict the probability that new, unseen instances belong to the positive class(repeat customer)
 - Evaluation: You can evaluate the model’s performance using metrics like accuracy, precision, AUC-ROC to see how well it will predict
-- 
-![image](https://github.com/user-attachments/assets/b1453164-5fba-4f33-a2de-575a0a8b8790)
+
+With respect to OUR data:  
+Target Variable/Label = repeat_customer  
+Columns to exclude: customer_id, product_line, product_id, invoice_id
+
 
