@@ -74,3 +74,16 @@ This process is repeated with the recent_customers and recent_invoices dataframe
 - Numerical Assembler
 - Scaler
 - Assembler
+
+
+## MLlib Overview  
+In Spark’s MLlib, Logistic Regression is a statistical method used for binary classification problems. It predicts whether an instance belongs to one of two categories(yes or no, repeat or non-repeat custome, etc). It uses the logistic function to model the relationship between the input features(like total purchases and days until shipped) and the probability of the target class(repeat customer)\. The output is a probability between 0 and 1  
+  
+How it works in MLlib:  
+- Input Features: you provide a set of features(NUMERIC)columns that help the model make predictions
+- Training: the model learns from your ‘labeled’ data(where the target variable is KNOWN to adjust its parameters.
+- Prediction: Once traines, you can use the model to predict the probability that new, unseen instances belong to the positive class(repeat customer)
+- Evaluation: You can evaluate the model’s performance using metrics like accuracy, precision, AUC-ROC to see how well it will predict
+- 
+![image](https://github.com/user-attachments/assets/b1453164-5fba-4f33-a2de-575a0a8b8790)
+
