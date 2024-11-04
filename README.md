@@ -144,15 +144,89 @@ Why single vector? MLlib algorithms expect input in the form of a single vector 
 ![image](https://github.com/user-attachments/assets/28d17d9a-8a6c-4f91-a5ac-5f880cfda6c1)
 
 
+## Scaler & One More Vector Assembler
+
+
+We utilize StandardScaler() to standardize our features by subtracting the mean and dividing by the standard deviation  
+
+Next, we add our customer_type_encoded feature using VectorAssembler() again to our vector of numerical features to give us our complete input features vector
+
+![image](https://github.com/user-attachments/assets/a5e303e9-2974-4ce6-b720-dc5078260ca3)
+
+## Create Pipeline Stages
+
+We build our pipeline using all of our transformations that can be executed all at once using the Pipeline() class. We create the class and use set.Stages() to specify the sequence of stages to be used in our pipeline. Each stage is a transformer of estimator and will be executed in the order specified.  
+ 
+We have our indexer where we convert our customer_type string categorical column to a numerical index, our encoder where we encode it into one hot encoded vector of values, our numerical assembler takes in our numerical features and outputs it into a single-vector column, our scaler standardizes the output features and we utilize assembler(vectorassembler) to add our one hot encoded column to our vector.
+
+![image](https://github.com/user-attachments/assets/7115d9d7-deca-4276-b977-0407c89160f1)
+
+
+Next, we split our data into training and test data sets. Were gonna fit our pipeline to our TRAINING dataset, then transform BOTH of the trainins and test datasets with the parameters gathered from that fit. We split our dataset so that 80% of the data will be allocated to the training set and 20% to the testing. Seed=2022 is a parameter that sets a random seed for reproducibility. Using a seed ensures that the split will be the same each time which is helpful for consistent results in experiments.
+We get back the sizes of the two datasets  
+ 
+Next, we fit the entire pipeline to the training data “train”. Each stage of the pipeline is applied to the training data.  
+
+After fitting, pipeline_model contains the fitted model for all stages which has the info for transforming new data. So we run pipeline_model on both the train and test dataset.  
+ 
+The transformed Datasets are now ready for training a machine learning model as they include all the necessary feature engineering steps performed consistently on both datasets.   
+
+
+## Create, Train, and Evaluate a Logistic Regression Model
+
+
+Next, we initialize a LogisticRegression() model and specify the column that contains the feature vector used for predictions, our labelCol which specifies the label or TARGET/dependent variable for the model in our case is repeat_customer, and maxIter which specifies the max number of iterations to formulate our model. So we pick 5 to find the optimal coefficients
+We fit the logistic regression model to the transformed dataset(train_transformed). The model learns the relationship between the features and the target variable by estimating coefficients for the logistic function.  
+ 
+Next, we have predictions=lr.model.transform(test_transformed) which applies the TRAINED logistic regression model to the transformed TESTING dataset.
+The Transform() method here generates predictions for each instance in the test set based on the features in all_features column. We select the columns we want to analyze/view.  
+
+rawPrediction: this column contains the raw output of the model before applying the softmax function, un-normalized scored for each class
+prediction: This column contains the predicted class label(0 or 1) for each instance based on the model’s output
+Probability: this column provides the predicted probabilities for each class indicating the model’s confidence in its predictions. The probability of being a repeat customer and the probability of being a non-repeat customer.  
+
+
+![image](https://github.com/user-attachments/assets/e9c14ec4-d922-497d-a503-6c6b682bc790)
+
+
+## Test Area Under ROC, Accuracy, Weights
 
 
 
+We will use an evaluator BinaryClassificationEvaluator() to see how well our model is performing. We set our parameters where labelCol is our target variable and has the actual labels(ground truth) for the test set, that indicates whether each customer is a repeat customer or not. And we specify the rawPredictionCol that contains our raw prediction scores from logistic regression model.  
+
+The evaluate method of the evaluator instance is called with predictions as the argument. This will calculate the area under the ROC (Receiver Operating Characteristic curve()AUC) which is common metric to evaluate performance of binary classification models.
+The AUC ranged from 0 to 1, 1 indicating perfect classification, .5 is indiscriminate(might as well guess), and below .5 is worse-than-random performance.  
+
+We generate an Area Under the ROC Curve(or AUC-ROC) of 0.97 which suggests that the model is very good at correctly classifying the positive class(repeat customers) and the negative class(non-repeat).   
+ 
+Next we filter our predictions dataframe to include only rows where the actual value of repeat_customer matches the predicted value.  
+Accuracy = # of Correct Predictions/Total Predictions
+
+We generate an accuracy of .92 which suggests that the model is highly effective in classifying customers as repeat or non repeat.   
+This would suggest that we can trust this model to provide reliable predictions.  
+
+IMPORTANT TO CONSIDER OTHER METRICS like AUC, precision, recall to get fuller picture of model performance especially is class distribution is imbalanced.  
+
+Finally, we inspect the model coefficients. This code retrieves the coefficients(or WEIGHTS) of the logistic regression model(lr_model). These weights indicate the importance and impact of each feature on the prediction outcome.
+We create a dataframe that converts the weights to float values, set the column name for the dataframe and set the index of the DF to the corresponding feature names.  
 
 
+![image](https://github.com/user-attachments/assets/f60c6dc3-6041-4c17-a354-b67e72fcbfec)
 
 
+If feature weight is positive, this suggests that as that feature value increases, so the does the likelihood of the customer being a repeat buyer.  
 
+Inversely, if the weight is negative, it implies that as that feature value decreases, the likelihood of that customer being a repeat buyer decreases as well.  
 
+- Days_until_shipped weight/coefficient is -0.935 which indicates that as the number of days until an order is shipped increases, the likelihood of a customer being a repeat buyer decreases.
+	-  So a potential implication is customers prefer quicker shipping times and longer shipping times reduces their likelihood of being a repeat customer
+
+- Total weight/coefficient is 3.122 thus a positive weight indicates that as total amount spent increases, the likelihood of the customer being repeat increases as well. 
+	-  Implication:Higher spending may correlate with greater customer satisfaction/loyalty
+
+- Customer_type_index weight/coefficient is -0.750007 suggests that being classified in one category is associated with a lower likelihood of being a repeat buyer
+	-  Could imply that non-members have a lower retention rate
 
 
 
