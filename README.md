@@ -1,7 +1,7 @@
 # Machine Learning for Customer Retention with Spark
 This project employs machine learning to predict customer retention for Distributed Discounts. Using Spark, we analyzed historical customer and transaction data to build a logistic regression model that identifies potential repeat buyers among first-time customers, aiding in targeted marketing strategies.
 
-Overview
+Overview  
 This project leverages Spark and machine learning to predict whether first-time customers will become repeat buyers for Distributed Discounts. By analyzing historical customer and transaction data, we aim to inform targeted advertising strategies.
 
 Steps Taken
