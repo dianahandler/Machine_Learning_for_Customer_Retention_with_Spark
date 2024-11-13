@@ -260,10 +260,12 @@ This suggested to me that our model isn’t as reliable as I originally thought 
 
 
 Here we have added product_line and store_location as numerical indices to view their correlations  
-Adding new features can allow us to use a more robust dataset for a more effective ML model
+Adding new features can allow us to use a more robust dataset for a more effective ML model.
 
 
 ![image](https://github.com/user-attachments/assets/a383401f-2666-4ff4-82cd-60c8a6aa1688)
+
+
 
 
 
